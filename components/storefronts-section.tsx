@@ -1,10 +1,14 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Globe, BarChart3, Maximize2, MoreHorizontal } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Globe, BarChart3, Maximize2, MoreHorizontal } from "lucide-react";
+import { useAppSelector } from "@/lib/hooks";
 
 export function StorefrontsSection() {
+  const metrics = useAppSelector((state) => state.analytics.metrics);
+  const totalSpend = `$${metrics.totalSpend.toLocaleString()}`;
+
   return (
     <Card className="bg-white border border-border">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
@@ -31,16 +35,40 @@ export function StorefrontsSection() {
             {/* Simplified world map representation */}
             <svg viewBox="0 0 800 400" className="w-full h-full">
               {/* Continents in light beige */}
-              <path d="M150 100 L250 80 L300 120 L280 180 L200 200 L120 160 Z" fill="#F5E6D3" />
-              <path d="M320 90 L450 85 L480 140 L420 190 L350 180 L310 130 Z" fill="#F5E6D3" />
-              <path d="M500 110 L580 100 L600 150 L550 180 L480 170 Z" fill="#F5E6D3" />
-              <path d="M200 220 L280 210 L320 260 L290 300 L220 290 L180 250 Z" fill="#F5E6D3" />
-              <path d="M100 250 L180 240 L200 290 L150 320 L80 310 Z" fill="#F5E6D3" />
-              <path d="M600 200 L680 190 L720 240 L680 280 L620 270 Z" fill="#F5E6D3" />
+              <path
+                d="M150 100 L250 80 L300 120 L280 180 L200 200 L120 160 Z"
+                fill="#F5E6D3"
+              />
+              <path
+                d="M320 90 L450 85 L480 140 L420 190 L350 180 L310 130 Z"
+                fill="#F5E6D3"
+              />
+              <path
+                d="M500 110 L580 100 L600 150 L550 180 L480 170 Z"
+                fill="#F5E6D3"
+              />
+              <path
+                d="M200 220 L280 210 L320 260 L290 300 L220 290 L180 250 Z"
+                fill="#F5E6D3"
+              />
+              <path
+                d="M100 250 L180 240 L200 290 L150 320 L80 310 Z"
+                fill="#F5E6D3"
+              />
+              <path
+                d="M600 200 L680 190 L720 240 L680 280 L620 270 Z"
+                fill="#F5E6D3"
+              />
 
               {/* India highlighted in orange */}
               <circle cx="520" cy="160" r="8" fill="#FF6B35" />
-              <text x="520" y="180" textAnchor="middle" className="text-xs font-medium" fill="#333">
+              <text
+                x="520"
+                y="180"
+                textAnchor="middle"
+                className="text-xs font-medium"
+                fill="#333"
+              >
                 India
               </text>
             </svg>
@@ -53,9 +81,9 @@ export function StorefrontsSection() {
 
           {/* Bottom gradient bar */}
           <div className="mt-4 flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">$6.11k</span>
+            <span className="text-sm text-muted-foreground">$0</span>
             <div className="flex-1 mx-4 h-2 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full"></div>
-            <span className="text-sm text-muted-foreground">$6.11k</span>
+            <span className="text-sm text-muted-foreground">{totalSpend}</span>
           </div>
         </div>
 
@@ -64,5 +92,5 @@ export function StorefrontsSection() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

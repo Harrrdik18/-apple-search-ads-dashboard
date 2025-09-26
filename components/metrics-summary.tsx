@@ -1,22 +1,29 @@
-"use client"
+"use client";
 
-import { Card, CardContent } from "@/components/ui/card"
-import { motion } from "framer-motion"
+import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { useAppSelector } from "@/lib/hooks";
 
 interface MetricCardProps {
-  title: string
-  value: string
-  change: string
-  changeType: "positive" | "negative" | "neutral"
-  index: number
+  title: string;
+  value: string;
+  change: string;
+  changeType: "positive" | "negative" | "neutral";
+  index: number;
 }
 
-function MetricCard({ title, value, change, changeType, index }: MetricCardProps) {
+function MetricCard({
+  title,
+  value,
+  change,
+  changeType,
+  index,
+}: MetricCardProps) {
   const changeColor = {
     positive: "text-green-600",
     negative: "text-red-600",
     neutral: "text-muted-foreground",
-  }[changeType]
+  }[changeType];
 
   return (
     <motion.div
@@ -32,58 +39,64 @@ function MetricCard({ title, value, change, changeType, index }: MetricCardProps
         </CardContent>
       </Card>
     </motion.div>
-  )
+  );
 }
 
 export function MetricsSummary() {
+  const metrics = useAppSelector((state) => state.analytics.metrics);
+
   const metricsData = [
     {
-      title: "Conversions ROAS:",
-      value: "0.00%",
-      change: "0%",
-      changeType: "neutral" as const,
-    },
-    {
-      title: "Conversions ROAS:",
-      value: "$6,109.89",
-      change: "+27.42%",
+      title: "Impressions",
+      value: metrics.totalImpressions.toLocaleString(),
+      change: "+12.5%", // Placeholder change - would need real calculation
       changeType: "positive" as const,
     },
     {
-      title: "Conversions ROAS:",
-      value: "0.00%",
-      change: "0%",
-      changeType: "neutral" as const,
+      title: "Clicks",
+      value: metrics.totalClicks.toLocaleString(),
+      change: "+8.3%",
+      changeType: "positive" as const,
     },
     {
-      title: "Conversions ROAS:",
-      value: "$2,101",
-      change: "0%",
-      changeType: "neutral" as const,
+      title: "CTR",
+      value: `${metrics.averageCtr}%`,
+      change: "+2.1%",
+      changeType: "positive" as const,
     },
     {
-      title: "Conversions ROAS:",
-      value: "$2.91",
-      change: "0%",
-      changeType: "neutral" as const,
+      title: "Spend",
+      value: `$${metrics.totalSpend.toLocaleString()}`,
+      change: "+15.7%",
+      changeType: "positive" as const,
     },
     {
-      title: "Conversions ROAS:",
-      value: "0",
-      change: "0%",
-      changeType: "neutral" as const,
+      title: "CPA",
+      value: `$${metrics.averageCpa}`,
+      change: "-5.2%",
+      changeType: "positive" as const,
     },
     {
-      title: "Conversions ROAS:",
-      value: "$0.00",
-      change: "0%",
-      changeType: "neutral" as const,
+      title: "Conversions",
+      value: metrics.totalConversions.toLocaleString(),
+      change: "+22.4%",
+      changeType: "positive" as const,
     },
-  ]
+    {
+      title: "ROAS",
+      value: `${((metrics.totalConversions * 50) / metrics.totalSpend).toFixed(
+        2
+      )}`, // Placeholder ROAS calculation
+      change: "+18.9%",
+      changeType: "positive" as const,
+    },
+  ];
 
   return (
     <div className="mb-6">
-      <h2 className="text-lg font-semibold text-foreground mb-4">Total Summary</h2>
+      <h2 className="text-lg font-semibold text-foreground mb-4">
+        Total Summary
+      </h2>
       <div className="grid grid-cols-7 gap-4">
         {metricsData.map((metric, index) => (
           <MetricCard
@@ -97,5 +110,5 @@ export function MetricsSummary() {
         ))}
       </div>
     </div>
-  )
+  );
 }

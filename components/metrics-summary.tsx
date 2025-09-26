@@ -1,0 +1,101 @@
+"use client"
+
+import { Card, CardContent } from "@/components/ui/card"
+import { motion } from "framer-motion"
+
+interface MetricCardProps {
+  title: string
+  value: string
+  change: string
+  changeType: "positive" | "negative" | "neutral"
+  index: number
+}
+
+function MetricCard({ title, value, change, changeType, index }: MetricCardProps) {
+  const changeColor = {
+    positive: "text-green-600",
+    negative: "text-red-600",
+    neutral: "text-muted-foreground",
+  }[changeType]
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.05 }}
+    >
+      <Card className="bg-white border border-border">
+        <CardContent className="p-4">
+          <div className="text-xs text-muted-foreground mb-1">{title}</div>
+          <div className="text-xl font-bold text-foreground mb-1">{value}</div>
+          <div className={`text-xs ${changeColor}`}>{change}</div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  )
+}
+
+export function MetricsSummary() {
+  const metricsData = [
+    {
+      title: "Conversions ROAS:",
+      value: "0.00%",
+      change: "0%",
+      changeType: "neutral" as const,
+    },
+    {
+      title: "Conversions ROAS:",
+      value: "$6,109.89",
+      change: "+27.42%",
+      changeType: "positive" as const,
+    },
+    {
+      title: "Conversions ROAS:",
+      value: "0.00%",
+      change: "0%",
+      changeType: "neutral" as const,
+    },
+    {
+      title: "Conversions ROAS:",
+      value: "$2,101",
+      change: "0%",
+      changeType: "neutral" as const,
+    },
+    {
+      title: "Conversions ROAS:",
+      value: "$2.91",
+      change: "0%",
+      changeType: "neutral" as const,
+    },
+    {
+      title: "Conversions ROAS:",
+      value: "0",
+      change: "0%",
+      changeType: "neutral" as const,
+    },
+    {
+      title: "Conversions ROAS:",
+      value: "$0.00",
+      change: "0%",
+      changeType: "neutral" as const,
+    },
+  ]
+
+  return (
+    <div className="mb-6">
+      <h2 className="text-lg font-semibold text-foreground mb-4">Total Summary</h2>
+      <div className="grid grid-cols-7 gap-4">
+        {metricsData.map((metric, index) => (
+          <MetricCard
+            key={index}
+            title={metric.title}
+            value={metric.value}
+            change={metric.change}
+            changeType={metric.changeType}
+            index={index}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
